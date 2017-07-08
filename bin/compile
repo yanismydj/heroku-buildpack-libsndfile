@@ -8,3 +8,5 @@ curl https://s3.amazonaws.com/libsndfile-binary/libsndfile.tar.gz -s -O
 mkdir -p vendor/libsndfile
 # untar the binary to the directory we want
 tar -C vendor/libsndfile -xvf libsndfile.tar.gz
+# copy the headers to /usr/local/include
+cp -r vendor/libsndfile/include/ /usr/local/include/
