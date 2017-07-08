@@ -8,3 +8,6 @@ curl https://s3.amazonaws.com/libsndfile-binary/libsndfile.tar.gz -s -O
 mkdir -p vendor/libsndfile
 # untar the binary to the directory we want
 tar -C vendor/libsndfile -xvf libsndfile.tar.gz
+
+echo Pei Test
+ls /app/vendor/libsndfile/include
