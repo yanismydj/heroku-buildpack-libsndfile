@@ -9,6 +9,5 @@ mkdir -p vendor/libsndfile
 # untar the binary to the directory we want
 tar -C vendor/libsndfile -xvf libsndfile.tar.gz
 
-echo Pei Test
-pwd
-ls vendor/libsndfile
+cp -r vendor/libsndfile/include /tmp/
+cp -r vendor/libsndfile/lib /tmp/
