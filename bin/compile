@@ -11,3 +11,4 @@ tar -C vendor/libsndfile -xvf libsndfile.tar.gz
 
 echo Pei Test
 pwd
+ls vendor/libsndfile
