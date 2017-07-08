@@ -10,4 +10,4 @@ mkdir -p vendor/libsndfile
 tar -C vendor/libsndfile -xvf libsndfile.tar.gz
 
 echo Pei Test
-ls /app/vendor
+pwd
