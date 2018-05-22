@@ -9,4 +9,4 @@ mkdir -p vendor/libsndfile
 # untar the binary to the directory we want
 tar -C vendor/libsndfile -xvf libsndfile.tar.gz
 
-cp -r vendor/libsndfile/ /tmp
+cp -r vendor/libsndfile/libsndfile /tmp
