@@ -48,4 +48,4 @@ cp -R "$BUILD_DIR/" $2
 
 echo "LD_LIBRARY_PATH= $LD_LIBRARY_PATH"
 echo BUILD_DIR= $BUILD_DIR
-echo which libsndfile
+which libsndfile
