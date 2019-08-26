@@ -1,12 +1,47 @@
-#!/usr/bin/env bash
-echo "-----&gt; Installing libsndfile 1.0.28"
-# change to the the BUILD_DIR ($1)
-cd $1
-# download the binary (-O) silently (-s)
-curl https://git.sailfishos.org/mirror/libsndfile/-/archive/1.0.28/libsndfile-1.0.28.tar.gz -s -O
-# make a directory to untar (like unzip) the binary
-mkdir -p vendor/libsndfile
-# untar the binary to the directory we want
-tar -C vendor/libsndfile -xvf libsndfile.tar.gz
+#!/bin/bash
 
-cp -r vendor/libsndfile/libsndfile /tmp
+indent() {
+  sed 's/^/       /'
+}
+
+# begin yasm
+
+PROFILE_PATH="$1/.profile.d/libsndfile.sh"
+
+echo "exporting PATH and LIBRARY_PATH" | indent
+mkdir -p $(dirname $PROFILE_PATH)
+
+echo 'export PATH="$PATH:$HOME/vendor/bin"' >> $PROFILE_PATH
+echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/vendor/lib"' >> $PROFILE_PATH
+
+mkdir -p "$1/vendor"
+export BUILD_DIR=$1"/vendor"
+export PATH="$BUILD_DIR/bin:"$PATH
+echo "-----> Building in $BUILD_DIR"
+
+
+if [ -f "$2/vendor/bin/libsndfile" ]; then
+	echo "Using cached build." | indent
+	cp -R  "$2/vendor" $1
+	exit 0
+fi
+
+# begin lame
+
+echo "-----> Starting libsndfile compilation"
+echo "Downloading libsndfile-1.0.28.tar.gz" | indent
+wget --quiet https://s3-eu-west-1.amazonaws.com/soundtracktor-public/libsndfile-1.0.28.tar.gz
+echo "Unpacking libsndfile" | indent
+tar -xf libsndfile-1.0.28.tar.gz
+cd libsndfile-1.0.28
+echo "Running configure" | indent
+./configure --prefix="$BUILD_DIR" >/dev/null 2>&1
+echo "Running make with target install" | indent
+make install >/dev/null 2>&1
+echo "Running make with target distclean" | indent
+make distclean > /dev/null 2>&1
+
+
+echo "-----> Caching build."
+mkdir -p $2
+cp -R "$BUILD_DIR/" $2
